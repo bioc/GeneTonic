@@ -63,10 +63,13 @@
 #' @importFrom tippy with_tippy
 #' @importFrom tools file_ext file_path_sans_ext
 #' @importFrom utils read.delim sessionInfo browseURL citation data write.table
-#' head
+#' head packageDescription
 #' @importFrom visNetwork renderVisNetwork visExport visIgraph visNetworkOutput
 #' visOptions
 #' @importFrom viridis viridis
+#' @importFrom mosdef deresult_to_df gene_plot geneinfo_to_html go_to_html
+#' map_to_color styleColorBar_divergent create_link_GO create_link_NCBI
+#' create_link_GeneCards create_link_GO 
 #'
 #' @name GeneTonic-pkg
 #' @keywords internal
