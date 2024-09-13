@@ -166,7 +166,7 @@ head(res_macrophage_IFNg_vs_naive)
 
 3. `res_enrich`: With the DE results of the previous step, we are going to extract the vector of DE genes (via `mosdef::deresult_to_df`), as well as the list of genes to be used as background, and feed these two objects into a function that computes the functional enrichment of the DE genes.
 
-   We are going to use the ORA method implemented in `r BiocStyle::Biocpkg("topGO")`, wrapped in the function `topGOtable` available in the `r BiocStyle::Biocpkg("pcaExplorer")` package, which by default uses the `BP` ontology and the `elim` method to decorrelate the GO graph structure and deliver less redundant functional categories.
+   We are going to use the ORA method implemented in `r BiocStyle::Biocpkg("topGO")`, wrapped in the function `run_topGO` available in the `r BiocStyle::Biocpkg("mosdef")` package, which by default uses the `BP` ontology and the `elim` method to decorrelate the GO graph structure and deliver less redundant functional categories.
    You can also use as an alternative the `enrichGO` function from `r BiocStyle::Biocpkg("clusterProfiler")`.
 
 ```{r create_resenrich1, eval=TRUE}
@@ -178,12 +178,11 @@ bg_ids <- rowData(dds_macrophage)$SYMBOL[rowSums(counts(dds_macrophage)) > 0]
 ```{r create_resenrich2, eval=FALSE}
 library("topGO")
 topgoDE_macrophage_IFNg_vs_naive <-
-  pcaExplorer::topGOtable(de_symbols_IFNg_vs_naive,
-                          bg_ids,
-                          ontology = "BP",
-                          mapping = "org.Hs.eg.db",
-                          geneID = "symbol",
-                          topTablerows = 500)
+  mosdef::run_topGO(de_genes = de_symbols_IFNg_vs_naive,
+                    bg_genes = bg_ids,
+                    ontology = "BP",
+                    mapping = "org.Hs.eg.db",
+                    geneID = "symbol")
 ```
 
 ```{r load_resenrich, eval=TRUE}
@@ -213,7 +212,7 @@ anno_df <- data.frame(
   row.names = rownames(dds_macrophage)
 )
 ## alternatively:
-# anno_df <- pcaExplorer::get_annotation_orgdb(dds_macrophage, "org.Hs.eg.db", "ENSEMBL")
+# anno_df <- mosdef::get_annotation_orgdb(dds_macrophage, "org.Hs.eg.db", "ENSEMBL")
 ```
 
 

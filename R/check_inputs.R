@@ -124,7 +124,7 @@ checkup_GeneTonic <- function(dds,
     stop(
       "The provided `annotation_obj` object does not respect the format required to use in GeneTonic\n",
       "e.g. all required column names have to be present.\n",
-      "You can use e.g. `pcaExplorer::get_annotation_orgdb()` for this purpose.\n",
+      "You can use e.g. `mosdef::get_annotation_orgdb()` for this purpose.\n",
       "Required columns: ", paste(colnames_annotation_obj, collapse = ", ")
     )
   }

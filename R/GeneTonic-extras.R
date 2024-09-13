@@ -27,7 +27,7 @@
 #' with a set of unambiguous identifiers (e.g. ENSEMBL ids) and `gene_name`,
 #' containing e.g. HGNC-based gene symbols. This object can be constructed via
 #' the `org.eg.XX.db` packages, e.g. with convenience functions such as
-#' [pcaExplorer::get_annotation_orgdb()].
+#' [mosdef::get_annotation_orgdb()].
 #'
 #' @return A `GeneTonic`-list object, containing in its named slots the arguments
 #' specified above: `dds`, `res_de`, `res_enrich`, and `annotation_obj` - the names
