@@ -74,3 +74,19 @@
 #' @name GeneTonic-pkg
 #' @keywords internal
 "_PACKAGE"
+
+.onAttach <- function(libname, pkgname) {
+  pkgVersion <- packageDescription("GeneTonic", fields = "Version")
+  msg <- paste0("Welcome to GeneTonic v", pkgVersion, "\n\n")
+  citation <- paste0(
+    "If you use GeneTonic in your work, please cite:\n\n",
+    "  GeneTonic: an R/Bioconductor package for streamlining the interpretation of RNA-seq data\n",
+    "  Federico Marini, Annekathrin Ludt, Jan Linke, Konstantin Strauch\n",
+    "  BMC Bioinformatics, 2021 - https://doi.org/10.1186/s12859-021-04461-5\n",
+    "and/or (if adopting the series of protocols as a whole)\n",
+    "  Interactive and Reproducible Workflows for Exploring and Modeling RNA-seq Data with pcaExplorer, ideal, and GeneTonic\n",
+    "  Annekathrin Ludt, Arsenij Ustjanzew, Harald Binder, Konstantin Strauch, Federico Marini\n",
+    "  Current Protocols, 2022 - https://doi.org/10.1002/cpz1.411\n"
+  )
+  packageStartupMessage(paste0(msg, citation))
+}
