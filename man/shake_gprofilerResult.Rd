@@ -20,7 +20,7 @@ A \code{data.frame} compatible for use in \code{\link[=GeneTonic]{GeneTonic()}} 
 Convert the output of g:Profiler for straightforward use in \code{\link[=GeneTonic]{GeneTonic()}}
 }
 \examples{
-# degenes <- (deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
+# degenes <- (mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
 # if called directly withín R...
 # enrichr_output_macrophage <- enrichr(degenes, dbs)
 # or alternatively, if downloaded from the website in tabular format
