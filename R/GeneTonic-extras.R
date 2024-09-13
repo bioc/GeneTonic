@@ -193,60 +193,15 @@ describe_gtl <- function(gtl) {
 #' go_2_html("GO:0043368")
 go_2_html <- function(go_id,
                       res_enrich = NULL) {
-  fullinfo <- GOTERM[[go_id]]
-  if (is.null(fullinfo)) {
-    return(HTML("Gene Ontology term not found!"))
-  }
-  # extracting the field/component values
-  go_linkbutton <- .link2amigo(GOID(fullinfo))
-  go_term <- Term(fullinfo)
-  go_ontology <- Ontology(fullinfo)
-  go_definition <- Definition(fullinfo)
-  go_synonims <- paste0(
-    unlist(
-      lapply(Synonym(fullinfo), function(arg) {
-        paste0(tags$b("Synonym: "), arg, tags$br())
-      })
-    ),
-    collapse = ""
-  )
-  go_secondary <- Secondary(fullinfo)
-  if (!is.null(res_enrich)) {
-    go_pvalue <- res_enrich[(res_enrich$gs_id == go_id), "gs_pvalue"]
-    go_zscore <- ifelse(
-      "z_score" %in% colnames(res_enrich),
-      format(round(res_enrich[(res_enrich$gs_id == go_id), "z_score"], 2), nsmall = 2),
-      "NA - not yet computed"
-    )
-    go_aggrscore <- ifelse(
-      "aggr_score" %in% colnames(res_enrich),
-      format(round(res_enrich[(res_enrich$gs_id == go_id), "aggr_score"], 2), nsmall = 2),
-      "NA - not yet computed"
-    )
-  }
-  # assembling them together
-  mycontent <- paste0(
-    tags$b("GO ID: "), go_linkbutton, tags$br(),
-    tags$b("Term: "), go_term, tags$br(),
-    ifelse(
-      !is.null(res_enrich),
-      paste0(tags$b("p-value: "), go_pvalue, tags$br(),
-        tags$b("Z-score: "), go_zscore, tags$br(),
-        tags$b("Aggregated score: "), go_aggrscore, tags$br(),
-        collapse = ""
-      ),
-      ""
-    ),
-    tags$b("Ontology: "), go_ontology, tags$br(), tags$br(),
-    tags$b("Definition: "), go_definition, tags$br(),
-    go_synonims,
-    ifelse(
-      length(go_secondary) > 0,
-      paste0(tags$b("Secondary: "), go_secondary, collapse = ""),
-      ""
-    )
-  )
-  return(HTML(mycontent))
+  .Deprecated(old = "go_2_html", new = "mosdef::go_to_html", 
+              msg = paste0(
+                "Please use `mosdef::go_to_html()` in replacement of the `go_2_html()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::go_to_html()` to see the details on how to use it"))
+  
+  mycontent <- mosdef::go_to_html(go_id = go_id,
+                                  res_enrich = res_enrich)
+  return(mycontent)
 }
 
 #' Link to the AmiGO database
@@ -256,12 +211,13 @@ go_2_html <- function(go_id,
 #' @return HTML for an action button
 #' @noRd
 .link2amigo <- function(val) {
-  sprintf(
-    '<a href = "http://amigo.geneontology.org/amigo/term/%s" target = "_blank" class = "btn btn-primary" style = "%s">%s</a>',
-    val,
-    .actionbutton_biocstyle,
-    val
-  )
+  .Deprecated(old = ".link2amigo", new = "mosdef::create_link_GO", 
+              msg = paste0(
+                "Please use `mosdef::create_link_GO()` in replacement of the `.link2amigo()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::create_link_GO()` to see the details on how to use it"))
+  
+  mosdef::create_link_GO(val = val)
 }
 
 #' Information on a gene
@@ -287,41 +243,16 @@ go_2_html <- function(go_id,
 #' geneinfo_2_html("Pf4")
 geneinfo_2_html <- function(gene_id,
                             res_de = NULL) {
-  gene_ncbi_button <- .link2ncbi(gene_id)
-  gene_genecards_button <- .link2genecards(gene_id)
-  gene_gtex_button <- .link2gtex(gene_id)
-
-  if (!is.null(res_de)) {
-    gid <- match(gene_id, res_de$SYMBOL)
-    if (is.na(gid)) {
-      message(
-        "Could not find the specified gene (`", gene_id,
-        "`) in the `res_de` object. \n",
-        "Still, the general HTML content has been generated."
-      )
-      gene_adjpvalue <- tags$em("not found")
-      gene_logfc <- tags$em("not found")
-    } else {
-      gene_adjpvalue <- format(res_de[gid, "padj"])
-      gene_logfc <- format(round(res_de[gid, "log2FoldChange"], 2), nsmall = 2)
-    }
-  }
-
-  mycontent <- paste0(
-    tags$b(gene_id), tags$br(),
-    "Link to the NCBI Gene database: ", gene_ncbi_button, tags$br(),
-    "Link to the GeneCards database: ", gene_genecards_button, tags$br(),
-    "Link to the GTEx Portal: ", gene_gtex_button, tags$br(),
-    ifelse(
-      !is.null(res_de),
-      paste0(tags$b("DE p-value (adjusted): "), gene_adjpvalue, tags$br(),
-        tags$b("DE log2FoldChange: "), gene_logfc,
-        collapse = ""
-      ),
-      ""
-    )
-  )
-  return(HTML(mycontent))
+  .Deprecated(old = "geneinfo_2_html", new = "mosdef::geneinfo_to_html", 
+              msg = paste0(
+                "Please use `mosdef::geneinfo_to_html()` in replacement of the `geneinfo_2_html()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::geneinfo_to_html()` to see the details on how to use it"))
+  
+  mycontent <- mosdef::geneinfo_to_html(gene_id = gene_id,
+                                        res_de = res_de)
+  
+  return(mycontent)
 }
 
 #' Link to NCBI database
@@ -331,12 +262,13 @@ geneinfo_2_html <- function(gene_id,
 #' @return HTML for an action button
 #' @noRd
 .link2ncbi <- function(val) {
-  sprintf(
-    '<a href = "http://www.ncbi.nlm.nih.gov/gene/?term=%s[sym]" target = "_blank" class = "btn btn-primary" style = "%s">%s</a>',
-    val,
-    .actionbutton_biocstyle,
-    val
-  )
+  .Deprecated(old = ".link2ncbi", new = "mosdef::create_link_NCBI", 
+              msg = paste0(
+                "Please use `mosdef::create_link_NCBI()` in replacement of the `.link2ncbi()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::create_link_NCBI()` to see the details on how to use it"))
+  
+  mosdef::create_link_NCBI(val = val)
 }
 
 #' Link to the GeneCards database
@@ -346,12 +278,13 @@ geneinfo_2_html <- function(gene_id,
 #' @return HTML for an action button
 #' @noRd
 .link2genecards <- function(val) {
-  sprintf(
-    '<a href = "https://www.genecards.org/cgi-bin/carddisp.pl?gene=%s" target = "_blank" class = "btn btn-primary" style = "%s">%s</a>',
-    val,
-    .actionbutton_biocstyle,
-    val
-  )
+  .Deprecated(old = ".link2genecards", new = "mosdef::create_link_GeneCards", 
+              msg = paste0(
+                "Please use `mosdef::create_link_GeneCards()` in replacement of the `.link2genecards()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::create_link_GeneCards()` to see the details on how to use it"))
+  
+  mosdef::create_link_GeneCards(val = val)
 }
 
 #' Link to the GTEx Portal
@@ -361,12 +294,13 @@ geneinfo_2_html <- function(gene_id,
 #' @return HTML for an action button
 #' @noRd
 .link2gtex <- function(val) {
-  sprintf(
-    '<a href = "https://www.gtexportal.org/home/gene/%s" target = "_blank" class = "btn btn-primary" style = "%s"><i class="fa fa-dna"></i>%s</a>',
-    val,
-    .actionbutton_biocstyle,
-    val
-  )
+  .Deprecated(old = ".link2gtex", new = "mosdef::create_link_GTEX", 
+              msg = paste0(
+                "Please use `mosdef::create_link_GTEX()` in replacement of the `.link2gtex()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::create_link_GTEX()` to see the details on how to use it"))
+  
+  mosdef::create_link_GTEX(val = val)
 }
 
 
@@ -483,7 +417,7 @@ overlap_jaccard_index <- function(x, y) {
 #' @examples
 #'
 #' data(res_de_macrophage, package = "GeneTonic")
-#' res_df <- deseqresult2df(res_macrophage_IFNg_vs_naive)
+#' res_df <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive)
 #' library("magrittr")
 #' library("DT")
 #' DT::datatable(res_df[1:50, ],
@@ -529,13 +463,19 @@ overlap_jaccard_index <- function(x, y) {
 styleColorBar_divergent <- function(data,
                                     color_pos,
                                     color_neg) {
-  max_val <- max(abs(data))
-  JS(
-    sprintf(
-      "isNaN(parseFloat(value)) || value < 0 ? 'linear-gradient(90deg, transparent, transparent ' + (50 + value/%s * 50) + '%%, %s ' + (50 + value/%s * 50) + '%%,%s  50%%,transparent 50%%)': 'linear-gradient(90deg, transparent, transparent 50%%, %s 50%%, %s ' + (50 + value/%s * 50) + '%%, transparent ' + (50 + value/%s * 50) + '%%)'",
-      max_val, color_pos, max_val, color_pos, color_neg, color_neg, max_val, max_val
-    )
+  .Deprecated(old = "styleColorBar_divergent", new = "mosdef::styleColorBar_divergent", 
+              msg = paste0(
+                "Please use `mosdef::styleColorBar_divergent()` in replacement of the `styleColorBar_divergent()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::styleColorBar_divergent()` to see the details on how to use it"))
+  
+  code_ret <- mosdef::styleColorBar_divergent(
+    data = data,
+    color_pos = color_pos,
+    color_neg = color_neg
   )
+  
+  return(code_ret)
 }
 
 
@@ -571,22 +511,16 @@ styleColorBar_divergent <- function(data,
 #' )(50)
 #' plot(b, col = map2color(b, pal2), pch = 20, cex = 3)
 map2color <- function(x, pal, symmetric = TRUE, limits = NULL) {
-  if (is.null(limits)) {
-    limits <- range(x)
-  }
+  .Deprecated(old = "map2color", new = "mosdef::map_to_color", 
+              msg = paste0(
+                "Please use `mosdef::map_to_color()` in replacement of the `map2color()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::map_to_color()` to see the details on how to use it"))
   
-  if (symmetric) {
-    max_val <- max(limits)
-    limits[1] <- -max_val
-    limits[2] <- max_val
-  }
-  
-  pal_ret <- pal[findInterval(x, seq(limits[1],
-    limits[2],
-    length.out = length(pal) + 1
-  ),
-  all.inside = TRUE
-  )]
+  pal_ret <- map_to_color(x = x, 
+                          pal = pal,
+                          symmetric = symmetric,
+                          limits = limits)
   return(pal_ret)
 }
 
@@ -641,21 +575,18 @@ check_colors <- function(x) {
 #' @examples
 #' data(res_de_macrophage, package = "GeneTonic")
 #' head(res_macrophage_IFNg_vs_naive)
-#' res_df <- deseqresult2df(res_macrophage_IFNg_vs_naive)
+#' res_df <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive)
 #' head(res_df)
 deseqresult2df <- function(res_de, FDR = NULL) {
-  if (!is(res_de, "DESeqResults")) {
-    stop("Not a DESeqResults object.")
-  }
-  res <- as.data.frame(res_de)
-  res <- cbind(rownames(res), res)
-  names(res)[1] <- "id"
-  res$id <- as.character(res$id)
-  res <- res[order(res$padj), ]
-  if (!is.null(FDR)) {
-    res <- res[!(is.na(res$padj)) & res$padj <= FDR, ]
-  }
-  res
+  .Deprecated(old = "deseqresult2df", new = "mosdef::deresult_to_df", 
+              msg = paste0(
+                "Please use `mosdef::deresult_to_df()` in replacement of the `deseqresult2df()` function, ",
+                "originally located in the GeneTonic package. \nCheck the manual page for ",
+                "`?mosdef::deresult_to_df()` to see the details on how to use it"))
+  
+  df <- mosdef::deresult_to_df(res_de = res_de,
+                               FDR = FDR)
+  return(df)
 }
 
 #' Export to sif
