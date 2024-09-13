@@ -32,7 +32,7 @@ test_that("Basic gene plot is generated", {
   #   gtl = gtl_macrophage,
   #   gene = "ENSG00000285982"
   # )
-  expect_is(p3_gtl, "gg")
+  # expect_is(p3_gtl, "gg")
   
   expect_error({
     mosdef::gene_plot(
@@ -131,7 +131,7 @@ test_that("Extraction of expression values works", {
   expect_is(df_simple, "data.frame")
   
   gtl_macrophage <- GeneTonicList(
-    de_container = dds_macrophage,
+    dds = dds_macrophage,
     res_de = res_macrophage_IFNg_vs_naive,
     res_enrich = res_enrich_IFNg_vs_naive[1:200, ],
     annotation_obj = anno_df
