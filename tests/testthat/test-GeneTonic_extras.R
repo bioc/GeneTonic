@@ -37,7 +37,7 @@ test_that("JS code for DT is generated", {
     value = c(-4, -3, -2, -1, 0, 1, 2, 3, 4)
   )
 
-  bg_jscode <- styleColorBar_divergent(
+  bg_jscode <- mosdef::styleColorBar_divergent(
     simplest_df$value,
     scales::alpha("forestgreen", 0.4),
     scales::alpha("gold", 0.4)
@@ -51,8 +51,8 @@ test_that("map2color works", {
     colorRampPalette(RColorBrewer::brewer.pal(name = "RdYlBu", 11))(50), 0.4
   ))
   my_vals <- res_macrophage_IFNg_vs_naive$log2FoldChange[1:20]
-  m2c <- map2color(x = my_vals, pal = mypal, limits = c(-4, 4))
-  m2c_nolimits <- map2color(x = my_vals, pal = mypal)
+  m2c <- mosdef::map_to_color(x = my_vals, pal = mypal, limits = c(-4, 4))
+  m2c_nolimits <- mosdef::map_to_color(x = my_vals, pal = mypal)
   # plot(1:20, col = m2c, pch = 20, cex = 5)
 
   expect_length(m2c, 20)
@@ -76,11 +76,11 @@ test_that("color check works", {
 })
 
 test_that("results to data frame conversion works", {
-  res_df <- deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 1)
-  res_df2 <- deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.05)
-  res_df3 <- deseqresult2df(res_macrophage_IFNg_vs_naive)
+  res_df <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 1)
+  res_df2 <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.05)
+  res_df3 <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive)
   expect_is(res_df, "data.frame")
-  expect_error(deseqresult2df(res_df))
+  expect_error(mosdef::deresult_to_df(res_df))
 })
 
 test_that("Exporting to sif format works", {
@@ -97,30 +97,30 @@ test_that("Exporting to sif format works", {
 })
 
 test_that("Retrieving info on GO term", {
-  out <- go_2_html("GO:0032729")
+  out <- mosdef::go_to_html("GO:0032729")
   expect_is(out, "character")
   expect_is(out, "html")
-  expect_equal(go_2_html("GO:00"), HTML("Gene Ontology term not found!"))
+  expect_equal(mosdef::go_to_html("GO:00"), HTML("Gene Ontology term not found!"))
 
   res_enrich <- get_aggrscores(res_enrich_IFNg_vs_naive, res_de = res_macrophage_IFNg_vs_naive, annotation_obj = anno_df)
-  out2 <- go_2_html("GO:0032729", res_enrich = res_enrich)
+  out2 <- mosdef::go_to_html("GO:0032729", res_enrich = res_enrich)
   expect_is(out2, "character")
   expect_is(out2, "html")
 })
 
 test_that("Retrieving info on gene", {
-  out <- geneinfo_2_html("Xist")
+  out <- mosdef::geneinfo_to_html("Xist")
   expect_is(out, "character")
   expect_is(out, "html")
 
   # using a gene name present in the res_de
-  out2 <- geneinfo_2_html("IRF1", res_de = res_macrophage_IFNg_vs_naive)
+  out2 <- mosdef::geneinfo_to_html("IRF1", res_de = res_macrophage_IFNg_vs_naive)
   expect_is(out2, "character")
   expect_is(out2, "html")
 
   # using a gene name which is not in the res_de
   expect_message(
-    out3 <- geneinfo_2_html("Irf1", res_de = res_macrophage_IFNg_vs_naive)
+    out3 <- mosdef::geneinfo_to_html("Irf1", res_de = res_macrophage_IFNg_vs_naive)
   )
   expect_is(out3, "character")
   expect_is(out3, "html")
@@ -128,17 +128,17 @@ test_that("Retrieving info on gene", {
 })
 
 test_that("Linking to AmiGO database", {
-  out <- .link2amigo("GO:0032729")
+  out <- mosdef::create_link_GO("GO:0032729")
   expect_is(out, "character")
 })
 
 test_that("Linking to NCBI database", {
-  out <- .link2ncbi("Actb")
+  out <- mosdef::create_link_NCBI("Actb")
   expect_is(out, "character")
 })
 
 test_that("Linking to GeneCards database", {
-  out <- .link2genecards("Gapdh")
+  out <- mosdef::create_link_GTEX("Gapdh")
   expect_is(out, "character")
 })
 

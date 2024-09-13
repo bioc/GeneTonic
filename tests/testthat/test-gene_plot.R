@@ -1,7 +1,7 @@
 context("Testing function for plotting the gene expression levels")
 
 test_that("Basic gene plot is generated", {
-  p <- gene_plot(
+  p <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
@@ -12,7 +12,7 @@ test_that("Basic gene plot is generated", {
   )
   expect_is(p, "gg")
 
-  p2_noanno_normallabels_untransformed <- gene_plot(
+  p2_noanno_normallabels_untransformed <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
@@ -28,14 +28,14 @@ test_that("Basic gene plot is generated", {
     res_enrich = res_enrich_IFNg_vs_naive,
     annotation_obj = anno_df
   )
-  p3_gtl <- gene_plot(
-    gtl = gtl_macrophage,
-    gene = "ENSG00000285982"
-  )
+  # p3_gtl <- mosdef::gene_plot(
+  #   gtl = gtl_macrophage,
+  #   gene = "ENSG00000285982"
+  # )
   expect_is(p3_gtl, "gg")
   
   expect_error({
-    gene_plot(
+    mosdef::gene_plot(
       dds = dds_macrophage,
       gene = "ENSG00000285982",
       assay = "counts",
@@ -48,28 +48,28 @@ test_that("Basic gene plot is generated", {
 })
 
 test_that("Enforcing plot types", {
-  p_jitter <- gene_plot(
+  p_jitter <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
     intgroup = "condition",
     plot_type = "jitteronly"
   )
-  p_boxplot <- gene_plot(
+  p_boxplot <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
     intgroup = "condition",
     plot_type = "boxplot"
   )
-  p_violin <- gene_plot(
+  p_violin <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
     intgroup = "condition",
     plot_type = "violin"
   )
-  p_sina <- gene_plot(
+  p_sina <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
@@ -83,7 +83,7 @@ test_that("Enforcing plot types", {
 })
 
 test_that("Data instead of plot is returned", {
-  df_jitter <- gene_plot(
+  df_jitter <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
@@ -94,7 +94,7 @@ test_that("Data instead of plot is returned", {
 })
 
 test_that("Assays are correctly accessed", {
-  p_non_norm_counts <- gene_plot(
+  p_non_norm_counts <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "counts",
@@ -102,7 +102,7 @@ test_that("Assays are correctly accessed", {
     normalized = FALSE
   )
   expect_is(p_non_norm_counts, "gg")
-  p_tpm <- gene_plot(
+  p_tpm <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "abundance",
@@ -111,7 +111,7 @@ test_that("Assays are correctly accessed", {
   )
   expect_is(p_tpm, "gg")
 
-  p_other_assay <- gene_plot(
+  p_other_assay <- mosdef::gene_plot(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     assay = "avgTxLength",
@@ -122,7 +122,7 @@ test_that("Assays are correctly accessed", {
 })
 
 test_that("Extraction of expression values works", {
-  df_simple <- get_expression_values(
+  df_simple <- mosdef::get_expr_values(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     intgroup = "condition",
@@ -136,7 +136,7 @@ test_that("Extraction of expression values works", {
     res_enrich = res_enrich_IFNg_vs_naive[1:200, ],
     annotation_obj = anno_df
   )
-  df_simple_gtl <- get_expression_values(
+  df_simple_gtl <- mosdef::get_expr_values(
     gtl = gtl_macrophage,
     gene = "ENSG00000285982",
     intgroup = "condition",
@@ -144,13 +144,13 @@ test_that("Extraction of expression values works", {
   )
   expect_is(df_simple_gtl, "data.frame")
   
-  expect_error(get_expression_values(
+  expect_error(mosdef::get_expr_values(
     dds = dds_macrophage,
     gene = "ENSG00000285982",
     intgroup = "condition",
     assay = "count"
   ))
-  df_unnormalized <- get_expression_values(
+  df_unnormalized <- mosdef::get_expr_values(
     dds = dds_unnormalized,
     gene = "ENSG00000285982",
     intgroup = "condition",

@@ -11,7 +11,7 @@ test_that("Early fails are triggered", {
 
   # providing a simple data frame
   expect_error(GeneTonic(dds_macrophage,
-    deseqresult2df(res_macrophage_IFNg_vs_naive),
+    mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive),
     res_enrich_IFNg_vs_naive,
     annotation_obj = anno_df
   ))
