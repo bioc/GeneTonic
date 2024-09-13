@@ -51,6 +51,7 @@ Imports:
     igraph,
     matrixStats,
     methods,
+    mosdef,
     plotly,
     RColorBrewer,
     rintrojs,
