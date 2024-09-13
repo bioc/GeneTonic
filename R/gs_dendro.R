@@ -147,7 +147,7 @@ gs_dendro <- function(res_enrich,
       mypal <- (scales::alpha(
         colorRampPalette(RColorBrewer::brewer.pal(name = "YlOrRd", 9))(50), 0.8
       ))
-      leaves_col <- map2color(col_var, mypal, symmetric = FALSE,
+      leaves_col <- mosdef::map_to_color(col_var, mypal, symmetric = FALSE,
                               limits = range(na.omit(col_var)))[dend_idx]
       
     } else {
@@ -157,7 +157,7 @@ gs_dendro <- function(res_enrich,
         mypal <- (scales::alpha(
           colorRampPalette(RColorBrewer::brewer.pal(name = "Oranges", 9))(50), 0.8
         ))
-        leaves_col <- map2color(col_var, mypal, symmetric = FALSE,
+        leaves_col <- mosdef::map_to_color(col_var, mypal, symmetric = FALSE,
                                 limits = range(na.omit(col_var)))[dend_idx]
         
       } else {
@@ -165,7 +165,7 @@ gs_dendro <- function(res_enrich,
         mypal <- rev(scales::alpha(
           colorRampPalette(RColorBrewer::brewer.pal(name = "RdYlBu", 11))(50), 0.8
         ))
-        leaves_col <- map2color(col_var, mypal, symmetric = TRUE,
+        leaves_col <- mosdef::map_to_color(col_var, mypal, symmetric = TRUE,
                                 limits = range(na.omit(col_var)))[dend_idx]
         
       }

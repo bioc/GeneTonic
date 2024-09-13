@@ -666,7 +666,7 @@ GeneTonic <- function(dds = NULL,
         formatRound(columns = c("log2FoldChange"), digits = 3) %>%
         formatStyle(
           "log2FoldChange",
-          background = styleColorBar_divergent(
+          background = mosdef::styleColorBar_divergent(
             as.data.frame(res_de)$log2FoldChange,
             scales::alpha("navyblue", 0.4),
             scales::alpha("darkred", 0.4)
@@ -726,7 +726,7 @@ GeneTonic <- function(dds = NULL,
     output$infobox_resde <- renderbs4ValueBox({
       bs4ValueBox(
         value = paste0(
-          nrow(deseqresult2df(reactive_values$res_de, FDR = input$de_fdr)),
+          nrow(mosdef::deresult_to_df(reactive_values$res_de, FDR = input$de_fdr)),
           " DE genes"
         ),
         subtitle = "res object",
@@ -811,7 +811,7 @@ GeneTonic <- function(dds = NULL,
       sel_gene_name <- input$gene_genespector
       corr_gene_id <- reactive_values$annotation_obj$gene_id[
         match(sel_gene_name, reactive_values$annotation_obj$gene_name)]
-      gene_plot(reactive_values$dds,
+      mosdef::gene_plot(reactive_values$dds,
                 gene = corr_gene_id,
                 intgroup = input$exp_condition,
                 annotation_obj = reactive_values$annotation_obj,
@@ -1077,7 +1077,7 @@ GeneTonic <- function(dds = NULL,
       ))
       cur_gsid <- reactive_values$res_enrich$gs_id[match(input$ggsnetwork_selected, reactive_values$res_enrich$gs_description)]
 
-      go_2_html(cur_gsid, res_enrich)
+      mosdef::go_to_html(cur_gsid, res_enrich)
     })
 
     output$ui_ggs_genebox <- renderUI({
@@ -1106,7 +1106,7 @@ GeneTonic <- function(dds = NULL,
       # if (!input$box_geneset$collapsed)
       #   bs4Dash::updatebs4Card("box_geneset", action = "toggle")
 
-      geneinfo_2_html(cur_sel, reactive_values$res_de)
+      mosdef::geneinfo_to_html(cur_sel, reactive_values$res_de)
     })
 
     output$ggs_geneplot <- renderPlot({
@@ -1122,7 +1122,7 @@ GeneTonic <- function(dds = NULL,
       ))
 
       cur_geneid <- reactive_values$annotation_obj$gene_id[match(cur_sel, reactive_values$annotation_obj$gene_name)]
-      gene_plot(reactive_values$dds,
+      mosdef::gene_plot(reactive_values$dds,
         gene = cur_geneid,
         intgroup = input$exp_condition,
         annotation_obj = reactive_values$annotation_obj,
@@ -1325,7 +1325,7 @@ GeneTonic <- function(dds = NULL,
 
       # message(cur_gsid)
       # GOTERM[[cur_gsid]]
-      go_2_html(cur_gsid, reactive_values$res_enrich)
+      mosdef::go_to_html(cur_gsid, reactive_values$res_enrich)
     })
 
     output$emap_sigheatplot <- renderPlot({

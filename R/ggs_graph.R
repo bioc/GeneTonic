@@ -188,7 +188,7 @@ ggs_graph <- function(res_enrich,
       ))
     }
 
-    V(g)$color[nodeIDs_genes] <- map2color(fcs_genes, mypal, limits = c(-4, 4))
+    V(g)$color[nodeIDs_genes] <- mosdef::map_to_color(fcs_genes, mypal, limits = c(-4, 4))
     V(g)$color[nodeIDs_gs] <- geneset_graph_color
 
     # title for tooltips
@@ -437,11 +437,11 @@ ggs_backbone <- function(res_enrich,
           colorRampPalette(RColorBrewer::brewer.pal(name = "RdYlBu", 11))(50), 1
         ))
 
-        V(bbgraph)$color.background <- map2color(col_var, mypal, symmetric = TRUE,
+        V(bbgraph)$color.background <- mosdef::map_to_color(col_var, mypal, symmetric = TRUE,
                                                  limits = range(na.omit(col_var)))
-        V(bbgraph)$color.highlight <- map2color(col_var, mypal_select, symmetric = TRUE,
+        V(bbgraph)$color.highlight <- mosdef::map_to_color(col_var, mypal_select, symmetric = TRUE,
                                                 limits = range(na.omit(col_var)))
-        V(bbgraph)$color.hover <- map2color(col_var, mypal_hover, symmetric = TRUE,
+        V(bbgraph)$color.hover <- mosdef::map_to_color(col_var, mypal_hover, symmetric = TRUE,
                                             limits = range(na.omit(col_var)))
         
         V(bbgraph)$color.background[is.na(V(bbgraph)$color.background)] <- "lightgrey"
@@ -468,11 +468,11 @@ ggs_backbone <- function(res_enrich,
           colorRampPalette(RColorBrewer::brewer.pal(name = "RdYlBu", 11))(50), 1
         ))
 
-        V(bbgraph)$color.background <- map2color(col_var, mypal, 
+        V(bbgraph)$color.background <- mosdef::map_to_color(col_var, mypal, 
                                                  limits = range(na.omit(col_var)))
-        V(bbgraph)$color.highlight <- map2color(col_var, mypal_select, 
+        V(bbgraph)$color.highlight <- mosdef::map_to_color(col_var, mypal_select, 
                                                 limits = range(na.omit(col_var)))
-        V(bbgraph)$color.hover <- map2color(col_var, mypal_hover, 
+        V(bbgraph)$color.hover <- mosdef::map_to_color(col_var, mypal_hover, 
                                             limits = range(na.omit(col_var)))
 
         V(bbgraph)$color.background[is.na(V(bbgraph)$color.background)] <- "lightgrey"
