@@ -90,3 +90,5 @@ biocViews:
     GUI, GeneExpression, Software, Transcription, Transcriptomics, Visualization,
     DifferentialExpression, Pathways, ReportWriting, GeneSetEnrichment, 
     Annotation, GO, ShinyApps
+Remotes:
+    github::imbeimainz/mosdef
