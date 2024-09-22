@@ -1,3 +1,15 @@
+# GeneTonic 2.99.0
+
+## Other notes
+
+* The transition to the functions available in the `mosdef` Bioconductor is complete, with the original functions now being deprecated. This applies to `goseqTable()` (now replaced by `mosdef::run_goseq()`), which has now been made faster and more robust in its functionality and in the ways it can be executed
+* The gene plot widgets now also use the `gene_plot()` function from `mosdef`, instead of the previous `ggplotCounts()` function - `gene_plot()` is more flexible and has more options to control the behavior of the final plot object
+* The `deseqresult2tbl()` and `deseqresult2DEgenes()` are now replaced by the more flexible `mosdef::deresult_to_df()`
+* The internally defined `createLinkENS()`, `createLinkGeneSymbol()`, and `createLinkGO()` are now replaced by the equivalent functions in `mosdef`
+* The Roxygen-based documentation now supports markdown. No visible changes should appear to the user, as the content should have stayed fairly the same
+* Although no visible changes for the end user are expected, the incoming major version bump will reflect the change in the dependency graph, ensuring that this is noticed at least at the version numbering level
+
+
 # GeneTonic 2.8.0
 
 ## Other notes
