@@ -35,7 +35,7 @@ formatting helpers
 with a set of unambiguous identifiers (e.g. ENSEMBL ids) and \code{gene_name},
 containing e.g. HGNC-based gene symbols. This object can be constructed via
 the \code{org.eg.XX.db} packages, e.g. with convenience functions such as
-\code{\link[pcaExplorer:get_annotation_orgdb]{pcaExplorer::get_annotation_orgdb()}}.}
+\code{\link[mosdef:get_annotation_orgdb]{mosdef::get_annotation_orgdb()}}.}
 }
 \value{
 A \code{GeneTonic}-list object, containing in its named slots the arguments

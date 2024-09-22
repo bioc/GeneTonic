@@ -40,7 +40,7 @@ https://stackoverflow.com/questions/33521828/stylecolorbar-center-and-shift-left
 \examples{
 
 data(res_de_macrophage, package = "GeneTonic")
-res_df <- deseqresult2df(res_macrophage_IFNg_vs_naive)
+res_df <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive)
 library("magrittr")
 library("DT")
 DT::datatable(res_df[1:50, ],

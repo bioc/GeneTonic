@@ -12,7 +12,7 @@ Four main ingredients are required:
 
 2. `res_de`: a `DESeqResults` object, the results of Differential Expression analysis, computed on the `dds` object above. This extends the `S4Vectors::DataFrame` class.
 
-3. `res_enrich`: a `data.frame`, containing the results of the enrichment analysis, generally computed on the basis of the DE results and the expression matrix. The `GeneTonic` main functions require some specific columns to be present, specified in the package documentation. Common formats (e.g. from `pcaExplorer::topGOtable` or from `ClusterProfiler`) are supported with conversion functions.
+3. `res_enrich`: a `data.frame`, containing the results of the enrichment analysis, generally computed on the basis of the DE results and the expression matrix. The `GeneTonic` main functions require some specific columns to be present, specified in the package documentation. Common formats (e.g. from `pcaExplorer::topGOtable`/`mosdef::run_topGO` or from `ClusterProfiler`) are supported with conversion functions.
 
 4. `annotation_obj`: the annotation `data.frame`, composed at least of two columns, `gene_id`, with a set of unambiguous identifiers (e.g. ENSEMBL ids) corresponding to the row names of the `dds` object, and `gene_name`, containing e.g. HGNC-based gene symbols. 
 

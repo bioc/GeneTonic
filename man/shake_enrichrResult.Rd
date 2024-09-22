@@ -28,7 +28,7 @@ Convert the output of Enrichr for straightforward use in \code{\link[=GeneTonic]
 #          "KEGG_2019_Human",
 #          "Reactome_2016",
 #          "WikiPathways_2019_Human")
-# degenes <- (deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
+# degenes <- (mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
 # if called directly within R...
 # enrichr_output_macrophage <- enrichr(degenes, dbs)
 # or alternatively, if downloaded from the website in tabular format

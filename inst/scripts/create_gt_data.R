@@ -29,7 +29,7 @@ res_macrophage_IFNg_vs_naive <- results(dds_macrophage,
 res_macrophage_IFNg_vs_naive$SYMBOL <- rowData(dds_macrophage)$SYMBOL
 library("AnnotationDbi")
 # de_symbols_IFNg_vs_naive <- res_macrophage_IFNg_vs_naive[(!(is.na(res_macrophage_IFNg_vs_naive$padj))) & (res_macrophage_IFNg_vs_naive$padj <= 0.05), "SYMBOL"]
-de_symbols_IFNg_vs_naive <- deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.05)$SYMBOL
+de_symbols_IFNg_vs_naive <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.05)$SYMBOL
 bg_ids <- rowData(dds_macrophage)$SYMBOL[rowSums(counts(dds_macrophage)) > 0]
 save(res_macrophage_IFNg_vs_naive, file = "data/res_de_macrophage.RData", compress = "xz")
 
@@ -53,7 +53,7 @@ topgoDE_macrophage_IFNg_vs_naive <-
 
 # gostres object ----------------------------------------------------------
 library("gprofiler2")
-degenes <- deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL
+degenes <- mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL
 gostres_macrophage <- gost(
   query = degenes, 
   organism = "hsapiens", 
@@ -101,7 +101,7 @@ dbs <- c("GO_Molecular_Function_2018",
          "KEGG_2019_Human",
          "Reactome_2016",
          "WikiPathways_2019_Human")
-degenes <- (deseqresult2df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
+degenes <- (mosdef::deresult_to_df(res_macrophage_IFNg_vs_naive, FDR = 0.01)$SYMBOL)
 enrichr_output_macrophage <- enrichr(degenes, dbs)
 
 save(enrichr_output_macrophage, 

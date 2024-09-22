@@ -166,7 +166,7 @@ For each of them, a plot for the expression values is displayed in the content t
 
 ```{r}
 lapply(selected_genes, function(arg) {
-  GeneTonic::gene_plot(dds,gene = arg,intgroup = intgroup, 
+  mosdef::gene_plot(dds,gene = arg,intgroup = intgroup, 
                        annotation_obj = annotation_obj)})
 ```
 
@@ -205,7 +205,7 @@ for (gs in selected_genesets) {
              geneset_id = gs, 
              cluster_columns = TRUE)
   
-  cat(go_2_html(gs, res_enrich))
+  cat(mosdef::go_to_html(gs, res_enrich))
   cat("\n\n")
 }
 ```
