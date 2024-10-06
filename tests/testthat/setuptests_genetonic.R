@@ -87,9 +87,12 @@ sorted_genes <- sort(
   decreasing = TRUE
 )
 
+sorted_genes_noNA <- sort(sorted_genes[!is.na(names(sorted_genes))], decreasing = TRUE)
+sorted_genes_noNA_nodupes <- sorted_genes_noNA[!duplicated(names(sorted_genes_noNA))]
+
 suppressWarnings({
   gsego_IFNg_vs_naive <- gseGO(
-    geneList = sorted_genes,
+    geneList = sorted_genes_noNA_nodupes,
     ont = "BP",
     OrgDb = org.Hs.eg.db,
     keyType = "SYMBOL",
